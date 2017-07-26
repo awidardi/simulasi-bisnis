@@ -1,0 +1,97 @@
+{{>_partial/header}}
+{{>_partial/navbar}}
+
+<main class="container">
+  <h3>Profil</h3>
+  <div class="row">
+    <div class="col-md-3">
+      <img class="img-responsive img-thumbnail" src="{{businessman.photo}}" alt="Card image cap"/>
+    </div>
+    <div class="col-md-9">
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Nama Perusahaan</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">: {{businessman.businessName}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Saldo</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">: {{businessman.balance}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Alamat perusahaan</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">: {{businessman.address}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Nomor telepon</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">: {{businessman.phoneNumber}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="btn btn-default" href="/my-umkm/edit">Edit profil</a>
+
+  <hr>
+
+  <h3>Daftar menu</h3>
+
+  <a class="btn btn-primary" href="/my-umkm/addproducts">Tambah Produk</a>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-9">
+      <div class="row">
+        {{#businessman.products}}
+        <div class="col-md-4">
+          <div class="card">
+            <img class="img-responsive card-img-top" src="{{photo}}" alt="Card image cap">
+            <div class="card-block">
+              <h4 class="card-title">{{name}}</h4>
+              <p class="card-text">
+                Harga <span class="rupiah">{{price}}</span> / barang
+                <br/>
+                {{description}}
+                <br/>
+                Stok barang : {{stock}}
+              </p>
+            </div>
+              <a class="btn btn-default" href="/my-umkm/product/{{id}}/edit">Edit Produk</a>
+              <form method="POST" action="/my-umkm/product/{{id}}/delete" style="display: inline-block">
+                <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                <button class="btn btn-default" value="submit">
+                  Hapus
+                </button>
+              </form>
+              {{^isSold}}
+                <form method="POST" action="/my-umkm/product/{{id}}/sell" style="display: inline-block">
+                  <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                  <button class="btn btn-default alert-success" value="submit">
+                    Jual Produk
+                  </button>
+                </form>
+              {{/isSold}}
+              {{#isSold}}
+                <form method="POST" action="/my-umkm/product/{{id}}/cancel-sell" style="display: inline-block">
+                  <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                  <button class="btn btn-default alert-danger" value="submit">
+                    Batalkan Jual
+                  </button>
+                </form>
+              {{/isSold}}
+          </div>
+        </div>
+        {{/businessman.products}}
+      </div>
+    </div>
+  </div>
+</main>
+
+
+{{>_partial/footer}}

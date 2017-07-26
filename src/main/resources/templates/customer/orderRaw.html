@@ -1,0 +1,54 @@
+{{>_partial/header}}
+{{>_partial/navbar}}
+
+<main class="container">
+    <h2>Daftar Pesanan Anda</h2>
+    <div class="order-list">
+        {{#orderRawList}}
+        <div class="order-item">
+            <div class="order-detail">
+                <table class="table">
+                    <tr>
+                        <td>Jumlah pax</td>
+                        <td>Status</td>
+                        <td>Nomor order</td>
+                    </tr>
+                    <tr>
+                        <td>{{quantities}}</td>
+                        <td>{{plainTextStatus}}</td>
+                        <td>{{id}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="order-product-detail">
+                <p>Detail pesanan</p>
+                <table class="table">
+                    <tr>
+                        <th>Nama produk</th>
+                        <th>Harga satuan</th>
+                        <th>Subtotal</th>
+                    </tr>
+                    {{#orderRawDetails}}
+                    <tr>
+                        <td>{{rawMaterial.name}}</td>
+                        <td class="rupiah">{{rawMaterial.price}}</td>
+                        <td class="rupiah">{{orderRaw.totalPrices}}</td>
+                    </tr>
+                    {{/orderRawDetails}}
+                </table>
+            </div>
+            <div class="order-action">
+                {{#isPending}}
+                    <a href="/my-juragan/orderRaw/{{id}}/delete"  class="btn btn-default">Tolak</a>
+                    <a href="/my-juragan/orderRaw/{{id}}/confirm" class="btn btn-primary">Terima</a>
+                {{/isPending}}
+                {{#isWaiting}}
+                    <a href="/my-juragan/orderRaw/{{id}}/confirm" class="btn btn-primary">Pesanan Selesai</a>
+                {{/isWaiting}}
+            </div>
+        </div>
+        {{/orderRawList}}
+    </div>
+</main>
+
+{{>_partial/footer}}

@@ -1,0 +1,18 @@
+{{>_partial/header}}
+{{>_partial/navbar}}
+
+<main class="container">
+    <h1>Masuk ke Kuliner Nusantara</h1>
+    <p if="${loginError}" class="error">Akun atau password salah</p>
+    <form method="POST" action="/login">
+        <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+        <fieldset>
+            Masukkan Username <input type="text" name="username" />  <br />
+            Masukkan Password <input type="password" name="password" />  <br />
+            <input type="submit"
+                   value="Login!" />
+        </fieldset>
+    </form>
+</main>
+
+{{>_partial/footer}}

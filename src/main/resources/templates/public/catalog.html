@@ -1,0 +1,136 @@
+{{>_partial/header}}
+{{>_partial/navbar}}
+
+<main class="container">
+  <form action="/my-juragan/order/new" method="POST">
+    <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+
+    <div class="row">
+      <div class="col-md-12">
+
+        <ul class="pagination" style="display: inline; padding-right: 30px">
+          <li class="page-item {{#isFirstPage}}disabled{{/isFirstPage}}">
+            <a class="page-link" href="/catalog?page={{prevPage}}&count={{rawMaterialPerPage}}" aria-label="Previous">
+              <span aria-hidden="true">Previous</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item"><span href="#" class="page-link">{{start}}-{{end}} dari {{total}} produk</span></li>
+          <li class="page-item {{#isLastPage}}disabled{{/isLastPage}}">
+            <a class="page-link" href="/catalog?page={{nextPage}}&count={{rawMaterialPerPage}}" aria-label="Next">
+              <span aria-hidden="true">Next</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="btn-group">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a href="?page={{currentPage}}&count={{rawMaterialPerPage}}&sort=name">Nama Produk</a></li>
+            <li><a href="?page={{currentPage}}&count={{rawMaterialPerPage}}&sort=id">ID Produk</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="row catering-list">
+      {{#rawMaterials}}
+      <div class="col-md-3">
+        <div class="panel panel-default">
+          <img class="img-responsive card-img-top center-block" src="{{photo}}" alt="Card image cap">
+          <div class="panel-body">
+
+
+            <div class="cart-left">
+              <p class="title">{{name}}</p>
+            </div>
+            <div class="pricey">
+                <span class="item_price rupiah">
+                  {{price}}
+                </span> / barang
+            </div>
+            <br/>
+            <br/>
+
+
+            <p class="card-text">{{description}}</p>
+            <br/>
+            <p class="card-text">Stok barang : {{stock}}</p>
+            <br/>
+            <label class="btn btn-default center-block">
+              <input type="checkbox" name="choosen-product" value="{{id}}"> Pilih Barang
+            </label>
+          </div>
+        </div>
+      </div>
+      {{/rawMaterials}}
+    </div>
+    <div class="order-action">
+      <button type="button" class="btn btn-lg btn-block btn-primary order-button" data-toggle="modal" data-target="#order-form">Pesan</button>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <nav>
+          <ul class="pagination">
+            <li class="page-item {{#isFirstPage}}disabled{{/isFirstPage}}">
+              <a class="page-link" href="/catalog?page={{prevPage}}&count={{rawMaterialPerPage}}" aria-label="Previous">
+                <span aria-hidden="true">Previous</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item"><span href="#" class="page-link">{{start}}-{{end}} dari {{total}} bahan baku</span></li>
+            <li class="page-item {{#isLastPage}}disabled{{/isLastPage}}">
+              <a class="page-link" href="/catalog?page={{nextPage}}&count={{rawMaterialPerPage}}" aria-label="Next">
+                <span aria-hidden="true">Next</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="order-form" tabindex="-1" role="dialog" aria-labelledby="Form order">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">Pesan Produk</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="quantity">Jumlah pesanan</label>
+              <input type="text" class="form-control" id="quantity" name="quantity" placeholder="0">
+            </div>
+            <div class="form-group">
+              <label for="note">Keterangan tambahan</label>
+              <textarea type="text" class="form-control" id="note" name="note" placeholder="Keterangan tambahan untuk pesanan Anda"></textarea>
+            </div>
+
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+              {{#helper.loggedInAsJuragan}}
+              <button type="submit" class="btn btn-primary btn-lg">Pesan</button>
+              {{/helper.loggedInAsJuragan}}
+              {{^helper.loggedInAsJuragan}}
+              <button type="submit" class="btn btn-primary btn-lg" disabled>Pesan</button>
+              <div class="alert alert-warning" role="alert">
+                <p>Silahkan <a href="/login">login</a> sebagai juragan atau <a href="/juragan/register">mendaftar</a>
+                  terlebih dahulu untuk dapat membeli produk.</p>
+              </div>
+              {{/helper.loggedInAsJuragan}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+</main>
+
+{{>_partial/footer}}

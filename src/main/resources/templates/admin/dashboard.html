@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to BluSea!</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>BluSea User List</h1>
+    <table>
+    	<tr>
+    		<th>id</th>
+    		<th>Nama Lengkap</th>
+    		<th>Nama Panggilan</th>
+    		<th>Email</th>
+    	</tr>
+
+		{{#users}}
+			<tr>
+				<td>{{id}}</td>
+				<td>{{fullName}}</td>
+				<td>{{nickName}}</td>
+				<td>{{email}}</td>
+			</tr>
+		{{/users}}
+    </table>
+</body>
+</html>

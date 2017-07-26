@@ -1,0 +1,11 @@
+{{^helper.loggedIn}}
+    {{>_partial/public-navbar}}
+{{/helper.loggedIn}}
+
+{{#helper.loggedInAsJuragan}}
+    {{>_partial/customer-navbar}}
+{{/helper.loggedInAsJuragan}}
+
+{{#helper.loggedInAsBusinessman}}
+    {{>_partial/catering-navbar}}
+{{/helper.loggedInAsBusinessman}}

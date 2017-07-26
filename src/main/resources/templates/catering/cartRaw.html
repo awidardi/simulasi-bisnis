@@ -1,0 +1,69 @@
+{{>_partial/header}}
+{{>_partial/navbar}}
+
+<main class="container">
+    <h2>Pesanan Anda</h2>
+    <form class="form-horizontal">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><b>Jumlah pax</b></label>
+            <div class="col-sm-10">
+                <p class="form-control-static">{{orderRaw.quantities}}</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><b>Catatan tambahan</b></label>
+            <div class="col-sm-10">
+                <p class="form-control-static">{{orderRaw.note}}</p>
+            </div>
+        </div>
+    </form>
+    <h4>Detail Pesanan</h4>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nama produk</th>
+                <th>Harga satuan</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#orderRaw.orderRawDetails}}
+            <tr>
+                <td>{{rawMaterial.name}}</td>
+                <td class="rupiah">{{rawMaterial.price}}</td>
+                <td class="rupiah">{{price}}</td>
+            </tr>
+            {{/orderRaw.orderRawDetails}}
+            <tr>
+                <td colspan="2" class="summary">Harga sebelum diskon</td>
+                <td class="rupiah">{{orderRaw.noDiscountPrice}}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="summary">Potongan diskon</td>
+                <td class="rupiah">{{orderRaw.discountAmount}}</td>
+            </tr>
+            <tr>
+                <td colspan="2" class="summary"><b>Total harga</b></td>
+                <td class="rupiah"><b>{{orderRaw.totalPrices}}</b></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Pembayaran</h2>
+
+    <p style="text-align: right">
+        Jika Anda telah membayar, silahkan konfirmasi pembayaran dengan mengklik tombol berikut.
+    </p>
+    <div class="order-action">
+        <form method="post" action="/my-umkm/orderRaw/{{orderRaw.id}}/delete">
+            <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+            <button class="btn btn-danger" type="submit">Hapus belanjaan ini</button>
+        </form>
+        <form action="/my-umkm/orderRaw/{{orderRaw.id}}/confirm" method="POST">
+            <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+            <button class="btn btn-primary" value="submit">Konfirmasi Pembayaran</button>
+        </form>
+    </div>
+</main>
+
+{{>_partial/footer}}

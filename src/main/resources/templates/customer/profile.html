@@ -1,0 +1,74 @@
+{{>_partial/header}}
+{{>_partial/navbar}}
+
+<main class="container">
+  <h3>Profil</h3>
+  <div class="row">
+    <div class="col-md-3">
+      <img class="img-responsive img-thumbnail" src="{{juragan.photo}}" alt="Card image cap"/>
+    </div>
+    <div class="col-md-9">
+      <div class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Nama Perusahaan</label>
+          <div class="col-sm-10">
+            <p class="form-control-static">: {{juragan.juraganName}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="btn btn-default" href="/my-juragan/edit">Edit profile</a>
+
+  <hr>
+
+  <h3>Daftar menu</h3>
+
+  <a class="btn btn-primary" href="/my-juragan/addproducts">Add new product</a>
+  <hr>
+
+  <div class="row">
+    <div class="col-md-9">
+      <div class="row">
+        {{#juragan.rawMaterials}}
+        <div class="col-md-4">
+          <div class="card">
+            <img class="img-responsive card-img-top" src="{{photo}}" alt="Card image cap">
+            <div class="card-block">
+              <h4 class="card-title">{{name}}</h4>
+              <p class="card-text">
+                Harga <span class="rupiah">{{price}}</span> / barang
+                <br/>
+                {{description}}
+                <br/>
+                Stok barang : {{stock}}
+              </p>
+            </div>
+            <a class="btn btn-default" href="/my-juragan/raw-material/{{id}}/edit">Edit Product</a>
+            <form method="POST" action="/my-juragan/raw-material/{{id}}/delete" style="display: inline-block">
+              <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+              <button class="btn btn-default" value="submit">
+                Delete
+              </button>
+            </form>
+            {{^isDiscounted}}
+            <a class="btn btn-default btn-success" href="/my-juragan/raw-material/{{id}}/add-promo">Tambah Promo</a>
+            {{/isDiscounted}}
+            {{#isDiscounted}}
+            <form method="POST" action="/my-juragan/raw-material/{{id}}/stop-promo" style="display: inline-block">
+              <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+              <button class="btn btn-default btn-danger" value="submit">
+                Stop Promo
+              </button>
+            </form>
+            {{/isDiscounted}}
+          </div>
+        </div>
+        {{/juragan.rawMaterials}}
+      </div>
+    </div>
+  </div>
+</main>
+
+
+{{>_partial/footer}}

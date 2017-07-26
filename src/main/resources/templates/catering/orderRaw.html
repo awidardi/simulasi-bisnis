@@ -1,0 +1,64 @@
+{{>_partial/header}}
+{{>_partial/navbar}}
+
+<main class="container">
+    <h2>Daftar Pesanan Anda</h2>
+    <div class="order-list">
+    {{#orderRawList}}
+        <div class="order-item">
+            <div class="order-detail">
+                <table class="table">
+                    <tr>
+                        <td>Jumlah barang</td>
+                        <td>Status</td>
+                        <td>Nomor pesanan</td>
+                    </tr>
+                    <tr>
+                        <td>{{quantities}}</td>
+                        <td>{{plainTextStatus}}</td>
+                        <td>{{id}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="order-product-detail">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nama produk</th>
+                            <th>Harga satuan</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#orderRawDetails}}
+                        <tr>
+                            <td>{{rawMaterial.name}}</td>
+                            <td class="rupiah"> {{rawMaterial.price}}</td>
+                            <td class="rupiah"> {{orderRaw.totalPrices}}</td>
+                        </tr>
+                        {{/orderRawDetails}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="order-action">
+                {{#isCart}}
+                    <form method="post" action="/my-umkm/orderRaw/{{id}}/delete">
+                        <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                        <button class="btn btn-danger" type="submit">Hapus belanjaan ini</button>
+                    </form>
+                    <a class="btn btn-secondary" href="/my-umkm/orderRaw/{{id}}/cart">Lihat invoice</a>
+                    <form action="/my-umkm/orderRaw/{{id}}/confirm" method="POST">
+                        <input type="hidden" name="_csrf" value="{{_csrf}}"/>
+                        <button class="btn btn-primary" value="submit">Konfirmasi Pembayaran</button>
+                    </form>
+                {{/isCart}}
+            </div>
+        </div>
+    {{/orderRawList}}
+    {{^orderRawList}}
+        <h2>Anda belum memiliki pesanan, silahkan melihat-lihat produk yang kami sediakan di <a href="/">sini</a>. </h2>
+    {{/orderRawList}}
+    </div>
+</main>
+
+{{>_partial/footer}}
